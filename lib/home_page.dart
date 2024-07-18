@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: EdgeInsets.all(10.0),
         child: Column(
+          
           children: [
             Text(
               "Bienvenido, selecciona tu peso y altura:",
@@ -115,7 +116,61 @@ class _HomePageState extends State<HomePage> {
                   },
                 );
               },
-            )
+            ),
+            SizedBox(height: 10.0,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 50.0,
+              child: ElevatedButton.icon(label: Text ("Calcular"),
+            
+              icon: Icon(Icons.play_arrow_rounded),
+              onPressed: (){},
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.black12),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Divider(
+              color: Colors.black12,
+              height: 10.2,
+            ),
+            SizedBox(
+              height: 10.2,
+            ),
+            Text("Resultado",
+             style: TextStyle(fontFamily: 'Manrope',
+            fontSize: 15.0,
+            //fontWeight: FontWeight.bold,
+            color: Color.fromARGB(209, 8, 1, 1),
+            ),
+            ),
+            Center(
+              child: Image.asset('assets/img/image2.png',
+              height: 200.0,
+              width: 200.0,
+              fit: BoxFit.contain,
+              ),
+            ),
+           Text(
+                  "24.6",
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(159, 12, 186, 195),
+                  ),
+                ),
+                Text(
+                  "Normal",
+                  style: TextStyle(
+                    fontFamily: 'Manrope',
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(159, 166, 74, 3),
+                  ),
+                ),
           ],
         ),
       ),
