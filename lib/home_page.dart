@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,6 +10,36 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double weight = 70;
   double height = 175;
+  double imc = 0;
+  String result = "Normal";
+  String recomendation =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+  String image = "";
+
+  calculateIMC() {
+    imc = weight / pow((height / 100), 2);
+    if (imc < 18.5) {
+      result = "Bajo peso";
+      recomendation = "Debes alimentarte mejor";
+      image = "assets/img/image1.png";
+    } else if (imc <= 24.9) {
+      result = "Normal";
+      recomendation =
+          "Buen trabajo, sigue comiendo saludable y realiza actividad física";
+      image = "assets/img/image2.png";
+    } else if (imc <= 29.9) {
+      result = "Sobrepeso";
+      recomendation =
+          "Toma agua simple,evita el consumo de refrescos, jugos o cualquier bebida que contenga azúcar. Realiza actividad física.";
+      image = "assets/img/image3.png";
+    } else {
+      result = "Obesidad";
+      recomendation = "Acude a un especialista, lo importante es tu salud";
+      image = "assets/img/image4.png";
+    }
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +49,6 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           "IMC Calculator App",
           style: TextStyle(
-            fontFamily: 'Manrope',
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -26,12 +57,11 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: EdgeInsets.all(10.0),
         child: Column(
-          
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Bienvenido, selecciona tu peso y altura:",
               style: TextStyle(
-                fontFamily: 'Manrope',
                 fontSize: 15.0,
                 color: Color(0xFF2b2d42),
               ),
@@ -45,9 +75,8 @@ class _HomePageState extends State<HomePage> {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  "75",
+                  weight.toInt().toString(),
                   style: TextStyle(
-                    fontFamily: 'Manrope',
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF2b2d42),
@@ -59,7 +88,6 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   "Kg",
                   style: TextStyle(
-                    fontFamily: 'Manrope',
                     fontSize: 14.0,
                     color: Color(0xFF2b2d42),
                   ),
@@ -83,9 +111,8 @@ class _HomePageState extends State<HomePage> {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  "175",
+                  height.toInt().toString(),
                   style: TextStyle(
-                    fontFamily: 'Manrope',
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF2b2d42),
@@ -97,7 +124,6 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   "cm",
                   style: TextStyle(
-                    fontFamily: 'Manrope',
                     fontSize: 14.0,
                     color: Color(0xFF2b2d42),
                   ),
@@ -117,60 +143,87 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            SizedBox(height: 10.0,
+            SizedBox(
+              height: 10.0,
             ),
             SizedBox(
               width: double.infinity,
               height: 50.0,
-              child: ElevatedButton.icon(label: Text ("Calcular"),
-            
-              icon: Icon(Icons.play_arrow_rounded),
-              onPressed: (){},
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.black12),
+              child: ElevatedButton.icon(
+                label: Text(
+                  "Calcular",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                icon: Icon(Icons.play_arrow_rounded),
+                onPressed: () {
+                  calculateIMC();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF2b2d42),
+                ),
               ),
             ),
             SizedBox(
               height: 10.0,
             ),
             Divider(
-              color: Colors.black12,
-              height: 10.2,
+              color: Color(0xFF2b2d42),
+              height: 10.0,
             ),
             SizedBox(
-              height: 10.2,
+              height: 10.0,
             ),
-            Text("Resultado",
-             style: TextStyle(fontFamily: 'Manrope',
-            fontSize: 15.0,
-            //fontWeight: FontWeight.bold,
-            color: Color.fromARGB(209, 8, 1, 1),
-            ),
-            ),
-            Center(
-              child: Image.asset('assets/img/image2.png',
-              height: 200.0,
-              width: 200.0,
-              fit: BoxFit.contain,
+            Text(
+              "Resultado: ",
+              style: TextStyle(
+                fontSize: 15.0,
+                color: Color(0xFF2b2d42),
               ),
             ),
-           Text(
-                  "24.6",
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(159, 12, 186, 195),
+            Center(
+              child: Image.asset(
+                indice.getImage
+                height: 200.0,
+                width: 200.0,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    imc.toStringAsFixed(1),
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      color: Color(0xffef233c),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  "Normal",
-                  style: TextStyle(
-                    fontFamily: 'Manrope',
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(159, 166, 74, 3),
+                  Text(
+                    result,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Color(0xFF2b2d42),
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    recomendation,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Color(0xFF2b2d42),
+                      fontWeight: FontWeight.normal,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
